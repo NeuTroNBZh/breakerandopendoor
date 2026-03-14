@@ -1,61 +1,63 @@
 # 💥 BreakerAndOpenDoor
 
-> Plugin CounterStrikeSharp pour serveurs CS2 Retake - Nettoyage automatique des maps
+> CounterStrikeSharp plugin for CS2 Retake servers - Automatic map cleanup
 
 [![CS2](https://img.shields.io/badge/Counter--Strike%202-000000?logo=counter-strike&logoColor=white)](https://store.steampowered.com/app/730/CounterStrike_2/)
 [![C#](https://img.shields.io/badge/C%23-239120?logo=c-sharp&logoColor=white)](https://docs.microsoft.com/dotnet/csharp/)
 [![.NET](https://img.shields.io/badge/.NET-512BD4?logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Release](https://img.shields.io/github/v/release/NeuTroNBZh/breakerandopendoor?include_prereleases)](https://github.com/NeuTroNBZh/breakerandopendoor/releases)
+[![Release](https://img.shields.io/github/v/release/NeuTroNBZh/breakerandopendoor)](https://github.com/NeuTroNBZh/breakerandopendoor/releases)
 
-## 📋 Description
+---
 
-**BreakerAndOpenDoor** est un plugin [CounterStrikeSharp](https://docs.cssharp.dev/) pour les serveurs Counter-Strike 2 en mode Retake. Il automatise le nettoyage des maps au début de chaque round en ouvrant les portes et en cassant les éléments destructibles (vitres, conduits, objets).
+## 📋 Overview
 
-### 🎯 Pourquoi ce plugin ?
+**BreakerAndOpenDoor** is a [CounterStrikeSharp](https://docs.cssharp.dev/) plugin for Counter-Strike 2 Retake servers. It automates map cleanup at the start of each round by opening doors and breaking destructible elements (windows, vents, objects).
 
-Les serveurs retake ont besoin d'un environnement déterministe à chaque round. Ce plugin fournit une pipeline robuste et configurable avec plusieurs passes de timing pour gérer les différences de comportement des entités selon les maps.
+### 🎯 Why This Plugin?
 
-## ✨ Fonctionnalités
+Retake servers need a deterministic environment every round. This plugin provides a robust and configurable pipeline with multiple timing passes to handle entity behavior differences across maps.
 
-| Fonction | Description | Configurable |
-|----------|-------------|--------------|
-| 🚪 **Ouverture des portes** | Ouvre automatiquement toutes les portes | ✅ |
-| 🪟 **Casse les vitres** | Détruit toutes les fenêtres et vitres | ✅ |
-| 🕳️ **Casse les conduits** | Détruit les vents et conduits d'aération | ✅ |
-| 📦 **Autres objets** | Casse les éléments destructibles restants | ✅ |
+## ✨ Features
 
-### 🔧 Caractéristiques techniques
+| Feature | Description | Configurable |
+|---------|-------------|--------------|
+| 🚪 **Door Opening** | Automatically opens all doors | ✅ |
+| 🪟 **Window Breaking** | Destroys all windows and glass | ✅ |
+| 🕳️ **Vent Breaking** | Destroys air vents and ducts | ✅ |
+| 📦 **Other Objects** | Breaks remaining destructible elements | ✅ |
 
-- **Multi-pass execution** : Stratégie en plusieurs phases (round_start, delayed, late, freeze_end)
-- **Fallback robuste** : Gestion des entités récalcitrantes
-- **Logging détaillé** : Commande de diagnostic pour le débogage
-- **Configuration simple** : Options true/false intuitives
-- **Performance optimisée** : Exécution rapide sans impact sur le serveur
+### 🔧 Technical Features
 
-## 📦 Installation Rapide
+- **Multi-pass execution**: Multi-phase strategy (round_start, delayed, late, freeze_end)
+- **Robust fallback**: Handles stubborn entities
+- **Detailed logging**: Diagnostic command for debugging
+- **Simple configuration**: Intuitive true/false options
+- **Optimized performance**: Fast execution with no server impact
 
-### Méthode 1 : Téléchargement direct (Recommandé)
+## 📦 Quick Installation
 
-1. **Télécharger** la dernière release : [breakerandopendoor.zip](https://github.com/NeuTroNBZh/breakerandopendoor/releases/latest/download/breakerandopendoor.zip)
-2. **Extraire** l'archive
-3. **Copier** le dossier `addons` dans `game/csgo/` de votre serveur
-4. **Redémarrer** la map ou le serveur
+### Method 1: Direct Download (Recommended)
 
-### Méthode 2 : GitHub Actions (Automatique)
+1. **Download** the latest release: [breakerandopendoor.zip](https://github.com/NeuTroNBZh/breakerandopendoor/releases/latest/download/breakerandopendoor.zip)
+2. **Extract** the archive
+3. **Copy** the `addons` folder to your server's `game/csgo/`
+4. **Restart** the map or server
 
-Cliquez sur le bouton ci-dessous pour déployer automatiquement :
+### Method 2: GitHub Actions (Automatic)
+
+Click the button below to deploy automatically:
 
 [![Deploy](https://img.shields.io/badge/🚀_Deploy-Actions-blue?logo=github-actions)](https://github.com/NeuTroNBZh/breakerandopendoor/actions/workflows/release.yml)
 
 ## ⚙️ Configuration
 
-Fichier de configuration :
+Configuration file:
 ```
 addons/counterstrikesharp/configs/plugins/breakerandopendoor/breakerandopendoor.json
 ```
 
-### Options disponibles
+### Available Options
 
 ```json
 {
@@ -67,40 +69,40 @@ addons/counterstrikesharp/configs/plugins/breakerandopendoor/breakerandopendoor.
 }
 ```
 
-| Option | Type | Défaut | Description |
-|--------|------|--------|-------------|
-| `EnableOpenDoors` | bool | `true` | Active l'ouverture automatique des portes |
-| `EnableBreakWindows` | bool | `true` | Active la destruction des vitres |
-| `EnableBreakVents` | bool | `true` | Active la destruction des conduits/vents |
-| `EnableBreakOtherBreakables` | bool | `true` | Active la destruction des autres objets cassables |
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `EnableOpenDoors` | bool | `true` | Enable automatic door opening |
+| `EnableBreakWindows` | bool | `true` | Enable window/glass destruction |
+| `EnableBreakVents` | bool | `true` | Enable vent/duct destruction |
+| `EnableBreakOtherBreakables` | bool | `true` | Enable other breakable objects destruction |
 
-## 🗺️ Maps supportées
+## 🗺️ Supported Maps
 
-| Map | Portes | Vitres | Vents | Statut |
-|-----|--------|--------|-------|--------|
-| de_mirage | ✅ | ✅ | ✅ | ✅ Testé |
-| de_inferno | ✅ | ✅ | ✅ | ✅ Testé |
-| de_nuke | ✅ | ✅ | ✅ | ✅ Testé |
-| de_vertigo | ✅ | ✅ | ✅ | ✅ Testé |
-| de_anubis | ✅ | ✅ | ✅ | ✅ Testé |
-| de_ancient | ✅ | ✅ | ✅ | ✅ Testé |
+| Map | Doors | Windows | Vents | Status |
+|-----|-------|---------|-------|--------|
+| de_mirage | ✅ | ✅ | ✅ | ✅ Tested |
+| de_inferno | ✅ | ✅ | ✅ | ✅ Tested |
+| de_nuke | ✅ | ✅ | ✅ | ✅ Tested |
+| de_vertigo | ✅ | ✅ | ✅ | ✅ Tested |
+| de_anubis | ✅ | ✅ | ✅ | ✅ Tested |
+| de_ancient | ✅ | ✅ | ✅ | ✅ Tested |
 
-## 🛠️ Prérequis
+## 🛠️ Requirements
 
 - [Counter-Strike 2 Dedicated Server](https://developer.valvesoftware.com/wiki/Counter-Strike_2/Dedicated_Servers)
 - [Metamod:Source](https://www.sourcemm.net/downloads.php?branch=master)
-- [CounterStrikeSharp](https://docs.cssharp.dev/) (avec runtime recommandé)
+- [CounterStrikeSharp](https://docs.cssharp.dev/) (runtime recommended)
 
 ## 🔍 Diagnostics
 
-Commande console serveur :
+Server console command:
 ```
 css_bod_dump_break_candidates
 ```
 
-Cette commande affiche les entités candidates (index + classname) pour aider à identifier les vents/vitres récalcitrants sur des maps spécifiques.
+This command displays candidate entities (index + classname) to help identify stubborn vents/windows on specific maps.
 
-## 🏗️ Compilation
+## 🏗️ Building from Source
 
 ### Windows
 ```powershell
@@ -112,53 +114,53 @@ powershell -ExecutionPolicy Bypass -File scripts/build-release.ps1
 dotnet build src/RetakePlugin/RetakePluginHost.csproj -c Release
 ```
 
-Sortie :
+Output:
 - `artifacts/release/breakerandopendoor/`
 - `artifacts/release/breakerandopendoor.zip`
 
-## 📁 Structure du projet
+## 📁 Project Structure
 
 ```
 breakerandopendoor/
 ├── src/
-│   └── RetakePlugin/           # Code source du plugin
-│       ├── Core/               # Logique métier
+│   └── RetakePlugin/           # Plugin source code
+│       ├── Core/               # Business logic
 │       ├── Config/             # Configuration
-│       ├── Adapters/           # Adaptateurs
-│       └── Host/               # Point d'entrée
+│       ├── Adapters/           # Adapters
+│       └── Host/               # Entry point
 ├── addons/
 │   └── counterstrikesharp/
-│       └── configs/plugins/breakerandopendoor/  # Config par défaut
+│       └── configs/plugins/breakerandopendoor/  # Default config
 ├── scripts/
-│   ├── build-release.ps1       # Script de build
-│   └── publish-github.ps1      # Script de publication
+│   ├── build-release.ps1       # Build script
+│   └── publish-github.ps1      # Publish script
 └── .github/workflows/
     ├── ci.yml                  # CI/CD
-    └── release.yml             # Release automatique
+    └── release.yml             # Automatic release
 ```
 
-## 🤝 Contribution
+## 🤝 Contributing
 
-Les contributions sont les bienvenues ! Consultez [CONTRIBUTING.md](CONTRIBUTING.md) pour les guidelines.
+Contributions are welcome! Check out [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-1. Fork le projet
-2. Créer une branche (`git checkout -b feature/AmazingFeature`)
-3. Commit les changements (`git commit -m 'Add some AmazingFeature'`)
-4. Push vers la branche (`git push origin feature/AmazingFeature`)
-5. Ouvrir une Pull Request
+1. Fork the project
+2. Create a branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## 📜 Changelog
 
-Voir [CHANGELOG.md](CHANGELOG.md) pour l'historique des versions.
+See [CHANGELOG.md](CHANGELOG.md) for version history.
 
-## 🔒 Sécurité
+## 🔒 Security
 
-Pour signaler une vulnérabilité, consultez [SECURITY.md](SECURITY.md).
+To report a vulnerability, see [SECURITY.md](SECURITY.md).
 
-## 📝 Licence
+## 📝 License
 
-Distribué sous licence MIT. Voir [LICENSE](LICENSE) pour plus d'informations.
+Distributed under MIT License. See [LICENSE](LICENSE) for more information.
 
 ---
 
-**⭐ Star ce repo si tu l'utilises sur ton serveur !**
+**⭐ Star this repo if you use it on your server!**
