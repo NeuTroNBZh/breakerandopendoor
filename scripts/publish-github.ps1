@@ -22,8 +22,16 @@ if (-not $isRepo) {
 }
 
 $remoteUrl = "https://github.com/$Owner/$Repo.git"
-$existingRemote = git remote get-url origin 2>$null
-if ($LASTEXITCODE -eq 0 -and -not [string]::IsNullOrWhiteSpace($existingRemote)) {
+$hasOrigin = $false
+$remoteNames = git remote
+foreach ($name in $remoteNames) {
+    if ($name -eq "origin") {
+        $hasOrigin = $true
+        break
+    }
+}
+
+if ($hasOrigin) {
     git remote set-url origin $remoteUrl
 } else {
     git remote add origin $remoteUrl
