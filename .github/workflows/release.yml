@@ -1,32 +1,93 @@
-﻿name: Release
+name: 🚀 Build & Release
 
 on:
-  push:
-    tags:
-      - 'v*'
-
-permissions:
-  contents: write
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version (ex: 1.0.0)'
+        required: true
+        default: '1.0.0'
+      prerelease:
+        description: 'Prerelease ?'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
-  release:
-    runs-on: windows-latest
+  build-and-release:
+    runs-on: ubuntu-latest
+    
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
-
-      - name: Build release bundle
-        shell: pwsh
-        run: powershell -ExecutionPolicy Bypass -File scripts/build-release.ps1
-
-      - name: Create GitHub release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: |
-            artifacts/release/breakerandopendoor.zip
-          generate_release_notes: true
+    - name: 📥 Checkout
+      uses: actions/checkout@v4
+      
+    - name: 🔧 Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+        
+    - name: 📦 Build Plugin
+      run: |
+        dotnet build src/RetakePlugin/RetakePluginHost.csproj -c Release
+        
+    - name: 🗂️ Prepare Release Package
+      run: |
+        mkdir -p artifacts/release/breakerandopendoor
+        
+        # Copier le DLL compilé
+        mkdir -p artifacts/release/breakerandopendoor/addons/counterstrikesharp/plugins/breakerandopendoor
+        cp src/RetakePlugin/bin/Release/net8.0/RetakePluginHost.dll artifacts/release/breakerandopendoor/addons/counterstrikesharp/plugins/breakerandopendoor/
+        
+        # Copier la config par défaut
+        mkdir -p artifacts/release/breakerandopendoor/addons/counterstrikesharp/configs/plugins/breakerandopendoor
+        cp addons/counterstrikesharp/configs/plugins/breakerandopendoor/breakerandopendoor.json artifacts/release/breakerandopendoor/addons/counterstrikesharp/configs/plugins/breakerandopendoor/
+        
+        # Créer le zip
+        cd artifacts/release
+        zip -r breakerandopendoor.zip breakerandopendoor/
+        
+    - name: 🏷️ Create Tag
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git tag -a "v${{ github.event.inputs.version }}" -m "Release v${{ github.event.inputs.version }}"
+        git push origin "v${{ github.event.inputs.version }}"
+        
+    - name: 🚀 Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v${{ github.event.inputs.version }}
+        name: 🎉 Release v${{ github.event.inputs.version }}
+        body: |
+          ## 🚀 BreakerAndOpenDoor v${{ github.event.inputs.version }}
+          
+          ### 📦 Installation
+          1. Téléchargez `breakerandopendoor.zip`
+          2. Extrayez l'archive
+          3. Copiez le dossier `addons` dans `game/csgo/` de votre serveur
+          4. Redémarrez votre serveur
+          
+          ### ⚙️ Configuration
+          Modifiez le fichier :
+          ```
+          addons/counterstrikesharp/configs/plugins/breakerandopendoor/breakerandopendoor.json
+          ```
+          
+          ### ✨ Fonctionnalités
+          - 🚪 Ouverture automatique des portes
+          - 🪟 Destruction des vitres
+          - 🕳️ Destruction des conduits/vents
+          - 📦 Destruction des autres objets cassables
+          
+          ### 📋 Prérequis
+          - CS2 Dedicated Server
+          - Metamod:Source
+          - CounterStrikeSharp
+          
+          ---
+          **Full Changelog**: https://github.com/${{ github.repository }}/compare/${{ github.event.inputs.version }}...v${{ github.event.inputs.version }}
+        files: artifacts/release/breakerandopendoor.zip
+        prerelease: ${{ github.event.inputs.prerelease }}
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
