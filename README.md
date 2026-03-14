@@ -83,6 +83,20 @@ Outputs:
 - artifacts/release/breakerandopendoor/
 - artifacts/release/breakerandopendoor.zip
 
+## Publish To GitHub (Simple)
+
+1. Create an empty GitHub repository named breakerandopendoor.
+2. Run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/publish-github.ps1 -Owner YOUR_GITHUB_USERNAME
+```
+
+This will:
+- push main
+- create and push tag v0.1.0
+- trigger GitHub Actions release workflow that publishes the release zip automatically
+
 ## Project Layout
 
 - src/RetakePlugin: plugin source code
