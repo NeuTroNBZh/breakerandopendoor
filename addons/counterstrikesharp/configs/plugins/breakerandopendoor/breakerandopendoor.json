@@ -1,0 +1,49 @@
+{
+  "ConfigVersion": 1,
+  "EnableOpenDoors": true,
+  "EnableBreakWindows": true,
+  "EnableBreakVents": true,
+  "EnableBreakOtherBreakables": true,
+  "MaxEntitiesPerRoundStart": 4096,
+  "VerboseLogging": true,
+  "EnableSecondPassAfterDelay": true,
+  "SecondPassDelaySeconds": 0.2,
+  "AdditionalPassCount": 4,
+  "AdditionalPassIntervalSeconds": 0.25,
+  "EnableLateRoundStartPass": true,
+  "LateRoundStartDelaySeconds": 2.5,
+  "EnableFreezeEndPass": true,
+  "FreezeEndPassDelaySeconds": 0.1,
+  "EnableKillFallbackForVentWindow": true,
+  "EnableRemoveFallbackForVentWindow": true,
+  "ProbeUnknownEntitiesForBreakInput": true,
+  "UnknownProbeMaxPerPass": 64,
+  "DebugDumpMaxLines": 200,
+  "UnknownProbeClassNameTokens": [
+    "vent",
+    "window",
+    "glass",
+    "shatter",
+    "surf",
+    "grate",
+    "break",
+    "brush"
+  ],
+  "DoorClassNames": [
+    "func_door",
+    "func_door_rotating",
+    "prop_door_rotating"
+  ],
+  "BreakableClassNames": [
+    "func_breakable",
+    "func_breakable_surf",
+    "prop_physics",
+    "prop_physics_multiplayer",
+    "func_shatterglass"
+  ],
+  "ExcludedClassNames": [
+    "info_player_terrorist",
+    "info_player_counterterrorist",
+    "logic_relay"
+  ]
+}

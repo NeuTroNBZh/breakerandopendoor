@@ -1,0 +1,30 @@
+﻿name: Bug report
+description: Report a bug with breakerandopendoor
+title: "bug: "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Clear description of the issue
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Include map name and server setup
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      description: Paste breakerandopendoor logs if available
+  - type: input
+    id: map
+    attributes:
+      label: Map
+      placeholder: de_mirage
