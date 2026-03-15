@@ -37,6 +37,14 @@ Retake servers need a deterministic environment every round. This plugin provide
 
 ## 📦 Quick Installation
 
+## 🚀 Release Status
+
+- Latest stable release: `v1.0.2`
+- Previous stable release: `v1.0.0`
+- `v1.0.1` exists as a tag but release creation failed in CI and is superseded by `v1.0.2`.
+
+For a clean operational baseline, use `v1.0.2`.
+
 ### Method 1: Direct Download (Recommended)
 
 1. **Download** the latest release: [breakerandopendoor.zip](https://github.com/NeuTroNBZh/breakerandopendoor/releases/latest/download/breakerandopendoor.zip)

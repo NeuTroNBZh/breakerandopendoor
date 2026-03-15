@@ -42,3 +42,16 @@ CS2 retake plugin that, at the start of each round:
   - README.md
 - Decision:
   - new `DoorOpenChancePercent` option (0-100), with stable per-door decision for one full round (including multi-pass).
+
+### 2026-03-15 22:00:56 +01:00
+- Action: fixed release pipeline and published a clean replacement release.
+- Files changed:
+  - .github/workflows/release.yml
+  - README.md
+  - docs/MAINTAINER-HANDOVER.md
+- Result:
+  - identified root cause for missing `v1.0.1` release (packaging step path mismatch)
+  - release workflow fixed to publish from `dotnet publish` output
+  - new stable release `v1.0.2` published successfully with release asset
+- Decision:
+  - keep a professional release policy: failed release tags are superseded by the next patch release.
