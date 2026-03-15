@@ -141,6 +141,22 @@ breakerandopendoor/
     └── release.yml             # Automatic release
 ```
 
+## 🧭 Maintainer Handover
+
+If someone needs to continue this plugin professionally, use:
+- docs/MAINTAINER-HANDOVER.md
+
+Release process summary:
+1. Merge tested changes to `main`
+2. Ensure CI passes
+3. Create semantic tag (`vMAJOR.MINOR.PATCH`)
+4. Push tag to trigger release workflow
+
+```bash
+git tag -a v1.0.2 -m "Release v1.0.2"
+git push origin v1.0.2
+```
+
 ## 🤝 Contributing
 
 Contributions are welcome! Check out [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.

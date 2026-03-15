@@ -16,6 +16,9 @@ on:
         type: boolean
         default: false
 
+permissions:
+  contents: write
+
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
@@ -39,17 +42,26 @@ jobs:
             echo "value=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Build plugin
-        run: dotnet build src/RetakePlugin/RetakePluginHost.csproj -c Release
+      - name: Publish plugin
+        run: dotnet publish src/RetakePlugin/RetakePluginHost.csproj -c Release -o artifacts/publish/breakerandopendoor
 
       - name: Prepare release package
         shell: bash
         run: |
+          set -euo pipefail
           mkdir -p artifacts/release/breakerandopendoor
 
-          # Copy built plugin DLL.
+          # Copy published plugin artifacts.
           mkdir -p artifacts/release/breakerandopendoor/addons/counterstrikesharp/plugins/breakerandopendoor
-          cp src/RetakePlugin/bin/Release/net8.0/RetakePluginHost.dll artifacts/release/breakerandopendoor/addons/counterstrikesharp/plugins/breakerandopendoor/
+          cp artifacts/publish/breakerandopendoor/breakerandopendoor.dll artifacts/release/breakerandopendoor/addons/counterstrikesharp/plugins/breakerandopendoor/
+
+          if [ -f artifacts/publish/breakerandopendoor/breakerandopendoor.deps.json ]; then
+            cp artifacts/publish/breakerandopendoor/breakerandopendoor.deps.json artifacts/release/breakerandopendoor/addons/counterstrikesharp/plugins/breakerandopendoor/
+          fi
+
+          if [ -f artifacts/publish/breakerandopendoor/breakerandopendoor.pdb ]; then
+            cp artifacts/publish/breakerandopendoor/breakerandopendoor.pdb artifacts/release/breakerandopendoor/addons/counterstrikesharp/plugins/breakerandopendoor/
+          fi
 
           # Copy default configuration file.
           mkdir -p artifacts/release/breakerandopendoor/addons/counterstrikesharp/configs/plugins/breakerandopendoor
