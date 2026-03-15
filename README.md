@@ -16,7 +16,10 @@
 
 ### 🎯 Why This Plugin?
 
-Retake servers need a deterministic environment every round. This plugin provides a robust and configurable pipeline with multiple timing passes to handle entity behavior differences across maps.
+Retake servers need predictable map state every round. This plugin enforces a clear policy:
+- open doors (never break them)
+- break windows, vents, and other breakables
+- support random door opening with stable per-round decisions
 
 ## ✨ Features
 
@@ -29,21 +32,18 @@ Retake servers need a deterministic environment every round. This plugin provide
 
 ### 🔧 Technical Features
 
-- **Multi-pass execution**: Multi-phase strategy (round_start, delayed, late, freeze_end)
-- **Robust fallback**: Handles stubborn entities
-- **Detailed logging**: Diagnostic command for debugging
-- **Simple configuration**: Intuitive true/false options
-- **Optimized performance**: Fast execution with no server impact
+- **Door safety rule**: door entities are always open-only targets
+- **Multi-pass execution**: immediate + delayed + extra + late + freeze_end
+- **Robust fallback**: multiple break inputs and vent/window fallback path
+- **Unknown probing**: optional probe mode for map-specific dynamic entities
+- **Diagnostics**: candidate dump command for fast map tuning
 
 ## 📦 Quick Installation
 
-## 🚀 Release Status
+## 🚀 Release Policy
 
-- Latest stable release: `v1.0.2`
-- Previous stable release: `v1.0.0`
-- `v1.0.1` exists as a tag but release creation failed in CI and is superseded by `v1.0.2`.
-
-For a clean operational baseline, use `v1.0.2`.
+- Active stable line: `v1.0.1`
+- If a tag fails in CI, it is replaced by a clean patch release and documented.
 
 ### Method 1: Direct Download (Recommended)
 
@@ -65,7 +65,16 @@ Configuration file:
 addons/counterstrikesharp/configs/plugins/breakerandopendoor/breakerandopendoor.json
 ```
 
-### Available Options
+### Modes
+
+The plugin supports two practical modes:
+
+1. **Minimal Production Mode** (recommended)
+- small config, lower maintenance
+- relies on safe built-in defaults
+- best for most servers
+
+Default shipped config uses this mode:
 
 ```json
 {
@@ -78,13 +87,32 @@ addons/counterstrikesharp/configs/plugins/breakerandopendoor/breakerandopendoor.
 }
 ```
 
+2. **Debug / Map Tuning Mode**
+- full control over timing, probing and classname lists
+- useful when a custom map has stubborn vents/windows
+
+Reference preset:
+- docs/config-debug-map-tuning.json
+
+### Core Options
+
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `EnableOpenDoors` | bool | `true` | Enable automatic door opening |
-| `DoorOpenChancePercent` | int | `100` | Percentage chance to open each door per round (0-100) |
-| `EnableBreakWindows` | bool | `true` | Enable window/glass destruction |
-| `EnableBreakVents` | bool | `true` | Enable vent/duct destruction |
-| `EnableBreakOtherBreakables` | bool | `true` | Enable other breakable objects destruction |
+| `EnableOpenDoors` | bool | `true` | Enables door opening at round start |
+| `DoorOpenChancePercent` | int | `100` | Per-door open chance each round (0-100) |
+| `EnableBreakWindows` | bool | `true` | Enables window/glass breaking |
+| `EnableBreakVents` | bool | `true` | Enables vent/grate breaking |
+| `EnableBreakOtherBreakables` | bool | `true` | Enables other breakable objects |
+
+### Advanced Options (optional)
+
+- Pass timing: `EnableSecondPassAfterDelay`, `SecondPassDelaySeconds`, `AdditionalPassCount`, `AdditionalPassIntervalSeconds`, `EnableLateRoundStartPass`, `LateRoundStartDelaySeconds`, `EnableFreezeEndPass`, `FreezeEndPassDelaySeconds`
+- Fallback control: `EnableKillFallbackForVentWindow`, `EnableRemoveFallbackForVentWindow`
+- Probe control: `ProbeUnknownEntitiesForBreakInput`, `UnknownProbeMaxPerPass`, `UnknownProbeClassNameTokens`
+- Diagnostics: `VerboseLogging`, `DebugDumpMaxLines`
+- Entity lists: `DoorClassNames`, `BreakableClassNames`, `ExcludedClassNames`
+
+If your server already works, keep only Minimal Production Mode.
 
 ## 🗺️ Supported Maps
 

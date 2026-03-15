@@ -85,3 +85,14 @@ CS2 retake plugin that, at the start of each round:
   - unknown probe now force-includes common dynamic props (`prop_dynamic*`, `prop_physics*`)
   - vent/window-like detection widened (`grate`, `breakable`, `prop_dynamic`) for stronger Kill/Remove fallback
   - default unknown probe tokens now include `prop_dynamic`
+
+### 2026-03-15 22:42:37 +01:00
+- Action: simplified the default configuration and documented clear config modes.
+- Files changed:
+  - addons/counterstrikesharp/configs/plugins/breakerandopendoor/breakerandopendoor.json
+  - docs/config-debug-map-tuning.json
+  - README.md
+- Result:
+  - default config now ships in minimal production mode
+  - added a full debug/map-tuning preset for advanced troubleshooting
+  - README now explains plugin behavior, configuration modes, and professional release policy in English
