@@ -11,6 +11,7 @@ $projectPath = Join-Path $repoRoot "src\RetakePlugin\RetakePluginHost.csproj"
 
 $publishDir = Join-Path $repoRoot "artifacts\publish\breakerandopendoor"
 $bundleRoot = Join-Path $repoRoot "artifacts\release\breakerandopendoor"
+$legacyBundleRoot = Join-Path $repoRoot "artifacts\release\RetakePluginHost"
 $pluginDir = Join-Path $bundleRoot "addons\counterstrikesharp\plugins\breakerandopendoor"
 $configDir = Join-Path $bundleRoot "addons\counterstrikesharp\configs\plugins\breakerandopendoor"
 
@@ -18,6 +19,7 @@ $configSource = Join-Path $repoRoot "addons\counterstrikesharp\configs\plugins\b
 $configTarget = Join-Path $configDir "breakerandopendoor.json"
 
 $zipPath = Join-Path $repoRoot "artifacts\release\breakerandopendoor.zip"
+$legacyZipPath = Join-Path $repoRoot "artifacts\release\RetakePluginHost.zip"
 
 $dotnetCmd = Get-Command dotnet -ErrorAction SilentlyContinue
 $dotnetExe = if ($dotnetCmd) {
@@ -43,6 +45,8 @@ Write-Host "==> Cleaning previous artifacts"
 Remove-Item -Path $publishDir -Recurse -Force -ErrorAction SilentlyContinue
 Remove-Item -Path $bundleRoot -Recurse -Force -ErrorAction SilentlyContinue
 Remove-Item -Path $zipPath -Force -ErrorAction SilentlyContinue
+Remove-Item -Path $legacyBundleRoot -Recurse -Force -ErrorAction SilentlyContinue
+Remove-Item -Path $legacyZipPath -Force -ErrorAction SilentlyContinue
 
 Write-Host "==> Publishing plugin"
 & $dotnetExe publish $projectPath -c $Configuration -o $publishDir

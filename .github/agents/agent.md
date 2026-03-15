@@ -65,3 +65,12 @@ CS2 retake plugin that, at the start of each round:
   - tightened door hint detection to avoid accidental non-door classification
   - reinforced vent/window break fallback sequence (Break/Shatter + Kill/KillHierarchy + Remove)
   - expanded default breakable classnames with common window/vent/glass entities
+
+### 2026-03-15 22:26:55 +01:00
+- Action: removed obsolete legacy release artifacts and automated their cleanup.
+- Files changed:
+  - scripts/build-release.ps1
+- Result:
+  - deleted stale `artifacts/release/RetakePluginHost/` and `artifacts/release/RetakePluginHost.zip`
+  - build script now always removes these legacy artifacts before generating a new release bundle
+  - only `artifacts/release/breakerandopendoor/` and `artifacts/release/breakerandopendoor.zip` remain after build
