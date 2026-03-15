@@ -1,14 +1,17 @@
-name: 🚀 Build & Release
+name: Build and Release
 
 on:
+  push:
+    tags:
+      - "v*"
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version (ex: 1.0.0)'
+        description: "Version (example: 1.0.1)"
         required: true
-        default: '1.0.0'
+        default: "1.0.1"
       prerelease:
-        description: 'Prerelease ?'
+        description: "Mark as prerelease"
         required: false
         type: boolean
         default: false
@@ -16,78 +19,78 @@ on:
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: 📥 Checkout
-      uses: actions/checkout@v4
-      
-    - name: 🔧 Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x'
-        
-    - name: 📦 Build Plugin
-      run: |
-        dotnet build src/RetakePlugin/RetakePluginHost.csproj -c Release
-        
-    - name: 🗂️ Prepare Release Package
-      run: |
-        mkdir -p artifacts/release/breakerandopendoor
-        
-        # Copier le DLL compilé
-        mkdir -p artifacts/release/breakerandopendoor/addons/counterstrikesharp/plugins/breakerandopendoor
-        cp src/RetakePlugin/bin/Release/net8.0/RetakePluginHost.dll artifacts/release/breakerandopendoor/addons/counterstrikesharp/plugins/breakerandopendoor/
-        
-        # Copier la config par défaut
-        mkdir -p artifacts/release/breakerandopendoor/addons/counterstrikesharp/configs/plugins/breakerandopendoor
-        cp addons/counterstrikesharp/configs/plugins/breakerandopendoor/breakerandopendoor.json artifacts/release/breakerandopendoor/addons/counterstrikesharp/configs/plugins/breakerandopendoor/
-        
-        # Créer le zip
-        cd artifacts/release
-        zip -r breakerandopendoor.zip breakerandopendoor/
-        
-    - name: 🏷️ Create Tag
-      run: |
-        git config user.name "GitHub Actions"
-        git config user.email "actions@github.com"
-        git tag -a "v${{ github.event.inputs.version }}" -m "Release v${{ github.event.inputs.version }}"
-        git push origin "v${{ github.event.inputs.version }}"
-        
-    - name: 🚀 Create Release
-      uses: softprops/action-gh-release@v1
-      with:
-        tag_name: v${{ github.event.inputs.version }}
-        name: 🎉 Release v${{ github.event.inputs.version }}
-        body: |
-          ## 🚀 BreakerAndOpenDoor v${{ github.event.inputs.version }}
-          
-          ### 📦 Installation
-          1. Téléchargez `breakerandopendoor.zip`
-          2. Extrayez l'archive
-          3. Copiez le dossier `addons` dans `game/csgo/` de votre serveur
-          4. Redémarrez votre serveur
-          
-          ### ⚙️ Configuration
-          Modifiez le fichier :
-          ```
-          addons/counterstrikesharp/configs/plugins/breakerandopendoor/breakerandopendoor.json
-          ```
-          
-          ### ✨ Fonctionnalités
-          - 🚪 Ouverture automatique des portes
-          - 🪟 Destruction des vitres
-          - 🕳️ Destruction des conduits/vents
-          - 📦 Destruction des autres objets cassables
-          
-          ### 📋 Prérequis
-          - CS2 Dedicated Server
-          - Metamod:Source
-          - CounterStrikeSharp
-          
-          ---
-          **Full Changelog**: https://github.com/${{ github.repository }}/compare/${{ github.event.inputs.version }}...v${{ github.event.inputs.version }}
-        files: artifacts/release/breakerandopendoor.zip
-        prerelease: ${{ github.event.inputs.prerelease }}
-        generate_release_notes: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Resolve release tag
+        id: tag
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "value=v${{ github.event.inputs.version }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build plugin
+        run: dotnet build src/RetakePlugin/RetakePluginHost.csproj -c Release
+
+      - name: Prepare release package
+        shell: bash
+        run: |
+          mkdir -p artifacts/release/breakerandopendoor
+
+          # Copy built plugin DLL.
+          mkdir -p artifacts/release/breakerandopendoor/addons/counterstrikesharp/plugins/breakerandopendoor
+          cp src/RetakePlugin/bin/Release/net8.0/RetakePluginHost.dll artifacts/release/breakerandopendoor/addons/counterstrikesharp/plugins/breakerandopendoor/
+
+          # Copy default configuration file.
+          mkdir -p artifacts/release/breakerandopendoor/addons/counterstrikesharp/configs/plugins/breakerandopendoor
+          cp addons/counterstrikesharp/configs/plugins/breakerandopendoor/breakerandopendoor.json artifacts/release/breakerandopendoor/addons/counterstrikesharp/configs/plugins/breakerandopendoor/
+
+          # Create release zip.
+          cd artifacts/release
+          zip -r breakerandopendoor.zip breakerandopendoor/
+
+      - name: Create release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.tag.outputs.value }}
+          name: Release ${{ steps.tag.outputs.value }}
+          body: |
+            ## BreakerAndOpenDoor ${{ steps.tag.outputs.value }}
+
+            ### Installation
+            1. Download `breakerandopendoor.zip`
+            2. Extract the archive
+            3. Copy the `addons` folder into your server `game/csgo/`
+            4. Restart the server or change map
+
+            ### Configuration
+            Edit:
+            ```
+            addons/counterstrikesharp/configs/plugins/breakerandopendoor/breakerandopendoor.json
+            ```
+
+            ### Features
+            - Automatic door opening with per-round random chance
+            - Window breaking
+            - Vent breaking
+            - Other breakable entities support
+
+            ### Requirements
+            - CS2 Dedicated Server
+            - Metamod:Source
+            - CounterStrikeSharp
+          files: artifacts/release/breakerandopendoor.zip
+          prerelease: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.prerelease || false }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

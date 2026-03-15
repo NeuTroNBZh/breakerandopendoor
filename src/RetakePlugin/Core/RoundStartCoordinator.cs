@@ -148,7 +148,7 @@ public sealed class RoundStartCoordinator
             }
             catch
             {
-                // Erreur locale: on continue le batch pour ne pas impacter le serveur.
+                // Local entity failure: continue processing to avoid impacting the server tick.
                 report.Errors++;
             }
         }

@@ -34,23 +34,23 @@ else {
 }
 
 if ([string]::IsNullOrWhiteSpace($dotnetExe)) {
-    throw "dotnet SDK introuvable (PATH et chemins usuels). Installe .NET 8 SDK puis relance scripts/build-release.ps1."
+    throw "dotnet SDK not found (PATH and common locations). Install .NET 8 SDK, then run scripts/build-release.ps1 again."
 }
 
-Write-Host "==> Dotnet detecte: $dotnetExe"
+Write-Host "==> Detected dotnet: $dotnetExe"
 
-Write-Host "==> Nettoyage des anciens artefacts"
+Write-Host "==> Cleaning previous artifacts"
 Remove-Item -Path $publishDir -Recurse -Force -ErrorAction SilentlyContinue
 Remove-Item -Path $bundleRoot -Recurse -Force -ErrorAction SilentlyContinue
 Remove-Item -Path $zipPath -Force -ErrorAction SilentlyContinue
 
-Write-Host "==> Publication du plugin"
+Write-Host "==> Publishing plugin"
 & $dotnetExe publish $projectPath -c $Configuration -o $publishDir
 if ($LASTEXITCODE -ne 0) {
-    throw "dotnet publish a echoue (code $LASTEXITCODE)."
+    throw "dotnet publish failed (code $LASTEXITCODE)."
 }
 
-Write-Host "==> Construction du bundle serveur"
+Write-Host "==> Building server bundle"
 New-Item -ItemType Directory -Path $pluginDir -Force | Out-Null
 New-Item -ItemType Directory -Path $configDir -Force | Out-Null
 
@@ -68,16 +68,16 @@ foreach ($name in $artifactNames) {
 }
 
 if (-not (Test-Path $configSource)) {
-    throw "Fichier de config introuvable: $configSource"
+    throw "Config file not found: $configSource"
 }
 Copy-Item -Path $configSource -Destination $configTarget -Force
 
-Write-Host "==> Creation de l'archive release"
+Write-Host "==> Creating release archive"
 Compress-Archive -Path (Join-Path $bundleRoot "*") -DestinationPath $zipPath -Force
 
 Write-Host ""
-Write-Host "Bundle pret:" -ForegroundColor Green
-Write-Host " - Dossier: $bundleRoot"
+Write-Host "Bundle ready:" -ForegroundColor Green
+Write-Host " - Folder: $bundleRoot"
 Write-Host " - Archive: $zipPath"
 Write-Host ""
-Write-Host "Deploy: copier le contenu de $bundleRoot dans game\csgo\"
+Write-Host "Deploy: copy the contents of $bundleRoot into game\csgo\"

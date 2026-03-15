@@ -45,7 +45,7 @@ public sealed class EntityClassifier
             return EntityKind.Excluded;
         }
 
-        // Regle gameplay absolue: une porte n'est jamais eligible a la casse.
+            // Absolute gameplay rule: a door is never eligible for breaking.
         if (_config.DoorClassNames.Contains(className) || entity.IsDoorHint)
         {
             return EntityKind.Door;

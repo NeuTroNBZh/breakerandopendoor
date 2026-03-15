@@ -18,7 +18,7 @@ Set-Location $repoRoot
 
 $isRepo = git rev-parse --is-inside-work-tree 2>$null
 if (-not $isRepo) {
-    throw "Ce dossier n'est pas un depot git."
+    throw "This folder is not a git repository."
 }
 
 $remoteUrl = "https://github.com/$Owner/$Repo.git"
@@ -37,7 +37,7 @@ if ($hasOrigin) {
     git remote add origin $remoteUrl
 }
 
-Write-Host "==> Push main vers $remoteUrl"
+Write-Host "==> Push main to $remoteUrl"
 git push -u origin main
 
 $existingTag = git tag -l $Tag
@@ -49,5 +49,5 @@ Write-Host "==> Push tag $Tag"
 git push origin $Tag
 
 Write-Host ""
-Write-Host "Publication terminee." -ForegroundColor Green
-Write-Host "Le workflow .github/workflows/release.yml publiera automatiquement la release GitHub sur le tag $Tag."
+Write-Host "Publication completed." -ForegroundColor Green
+Write-Host "The .github/workflows/release.yml workflow will publish the GitHub release automatically for tag $Tag."

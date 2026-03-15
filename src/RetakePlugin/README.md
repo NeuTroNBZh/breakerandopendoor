@@ -1,53 +1,54 @@
 # RetakePlugin
 
-Squelette principal du plugin CS2 retake oriente round_start.
+Core CS2 retake plugin implementation focused on round_start orchestration.
 
-## Regles gameplay
-- Toute porte doit etre ouverte.
-- Aucune porte ne doit etre cassee.
-- Tout cassable non-porte doit etre casse au debut du round.
+## Gameplay Rules
+- Every door must be opened.
+- No door must ever be broken.
+- Every non-door breakable should be broken at round start.
 
 ## Architecture
-- RetakePlugin.cs: entree plugin et hook round_start.
-- Host/RetakePluginHost.cs: plugin CounterStrikeSharp concret (BasePlugin) branche sur round_start.
-- Core/RoundStartCoordinator.cs: orchestration scan -> classification -> action.
-- Core/EntityScanner.cs: collecte des entites depuis une abstraction testable.
-- Core/EntityClassifier.cs: classification avec priorite portes.
-- Core/ActionExecutor.cs: execution des actions via API moteur abstraite.
-- Config/PluginConfig.cs: classnames et limites configurables.
-- Contracts/*.cs: contrats minimaux pour test unitaire et inversion de dependances.
-- Adapters/CounterStrikeSharp/*: adaptateurs concrets provider/actions + factory de wiring.
+- RetakePlugin.cs: plugin entry point and round lifecycle integration.
+- Host/RetakePluginHost.cs: concrete CounterStrikeSharp plugin (BasePlugin) wired to events.
+- Core/RoundStartCoordinator.cs: scan -> classification -> action orchestration.
+- Core/EntityScanner.cs: entity collection through a testable abstraction.
+- Core/EntityClassifier.cs: entity classification with door-first priority.
+- Core/ActionExecutor.cs: action execution through an abstract engine API.
+- Config/PluginConfig.cs: configurable classnames and limits.
+- Contracts/*.cs: minimal contracts for unit tests and dependency inversion.
+- Adapters/CounterStrikeSharp/*: concrete provider/action adapters plus runtime factory.
 
-## Wiring CounterStrikeSharp
-- Fournir une implementation de ICounterStrikeSharpApi qui:
-	- expose EnumerateEntities()
-	- execute TryOpenDoor(entityId)
-	- execute TryBreakEntity(entityId)
-- Creer le plugin via RetakePlugin.CreateWithCounterStrikeSharp(api, config).
+## CounterStrikeSharp Wiring
+- Provide an ICounterStrikeSharpApi implementation that:
+  - exposes EnumerateEntities()
+  - executes TryOpenDoor(entityId)
+  - executes TryBreakEntity(entityId)
+- Create plugin runtime via RetakePlugin.CreateWithCounterStrikeSharp(api, config).
 
-Implementation moteur incluse:
-- CounterStrikeSharpEngineApi utilise Utilities.GetAllEntities() pour l'enumeration.
-- Les actions utilisent AcceptInput("Open"/"Break") avec fallback AddEntityIOEvent.
-- Un wiring direct est disponible via CounterStrikeSharpRuntimeFactory.CreatePlugin(config).
+Included engine implementation:
+- CounterStrikeSharpEngineApi uses Utilities.GetAllEntities() for enumeration.
+- Actions use AcceptInput("Open"/"Break") with AddEntityIOEvent fallback.
+- Direct wiring is available via CounterStrikeSharpRuntimeFactory.CreatePlugin(config).
 
-Le pipeline conserve la priorite metier:
+Business-priority pipeline:
 1. Exclusion
-2. Porte -> Open
-3. Cassable non-porte -> Break
+2. Door -> Open
+3. Non-door breakable -> Break
 4. Ignore
 
-## Plugin hote CounterStrikeSharp
-- Classe concrete: Host/RetakePluginHost.cs
-- Hook evenement: [GameEventHandler] OnRoundStart(EventRoundStart, GameEventInfo)
-- Comportement: appelle _runtime.OnRoundStart() puis log le rapport d'execution.
-- Chargement config: IPluginConfig<PluginConfig> via OnConfigParsed(PluginConfig).
+## CounterStrikeSharp Host Plugin
+- Concrete class: Host/RetakePluginHost.cs
+- Event hook: [GameEventHandler] OnRoundStart(EventRoundStart, GameEventInfo)
+- Behavior: calls _runtime.OnRoundStart() then logs the execution report.
+- Config loading: IPluginConfig<PluginConfig> via OnConfigParsed(PluginConfig).
 
-## Exemple de config plugin
-Exemple de contenu pour le fichier de configuration CounterStrikeSharp du plugin:
+## Example Plugin Config
+Example CounterStrikeSharp configuration:
 
 ```json
 {
 	"EnableOpenDoors": true,
+	"DoorOpenChancePercent": 70,
 	"EnableBreakWindows": true,
 	"EnableBreakVents": true,
 	"EnableBreakOtherBreakables": true,
@@ -72,61 +73,62 @@ Exemple de contenu pour le fichier de configuration CounterStrikeSharp du plugin
 }
 ```
 
-Signification des options de gameplay:
-- `EnableOpenDoors`: ouvre les portes au debut du round.
-- `EnableBreakWindows`: casse les elements classes window/glass.
-- `EnableBreakVents`: casse les elements classes vent/grate.
-- `EnableBreakOtherBreakables`: casse les autres breakables detectes.
+Gameplay options:
+- `EnableOpenDoors`: enables door opening at round start.
+- `DoorOpenChancePercent`: percentage chance (0-100) to open each door each round.
+- `EnableBreakWindows`: breaks entities classified as window/glass.
+- `EnableBreakVents`: breaks entities classified as vent/grate.
+- `EnableBreakOtherBreakables`: breaks other detected breakables.
 
-Fichier pret a deposer dans une arborescence serveur CounterStrikeSharp:
+Ready-to-deploy config path:
 - addons/counterstrikesharp/configs/plugins/breakerandopendoor/breakerandopendoor.json
 
-## Etapes suivantes
-1. Affiner les classnames selon les maps retake cibles.
-2. Ajouter tests unitaires du classifier et du coordinator.
-3. Ajouter tests d'integration serveur sur maps retake cibles.
+## Next Steps
+1. Fine-tune classnames for your target retake maps.
+2. Add unit tests for classifier and coordinator.
+3. Add integration tests on target retake maps.
 
-## Release drop-in (pret a glisser-deposer)
-Objectif: produire un dossier/zip que l'admin serveur copie dans `game/csgo/` et le plugin est operationnel.
+## Drop-in Release Bundle
+Goal: produce a folder/zip that server admins can copy into `game/csgo/`.
 
-Prerequis build:
-- .NET 8 SDK installe (`dotnet` accessible dans le PATH).
+Build prerequisite:
+- .NET 8 SDK installed (`dotnet` available in PATH).
 
-Script fourni:
+Provided script:
 - `scripts/build-release.ps1`
 
-Commande:
+Command:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/build-release.ps1
 ```
 
-Sorties generees:
+Generated outputs:
 - `artifacts/release/breakerandopendoor/addons/counterstrikesharp/plugins/breakerandopendoor/breakerandopendoor.dll`
 - `artifacts/release/breakerandopendoor/addons/counterstrikesharp/plugins/breakerandopendoor/breakerandopendoor.deps.json`
 - `artifacts/release/breakerandopendoor/addons/counterstrikesharp/plugins/breakerandopendoor/breakerandopendoor.pdb`
 - `artifacts/release/breakerandopendoor/addons/counterstrikesharp/configs/plugins/breakerandopendoor/breakerandopendoor.json`
 - `artifacts/release/breakerandopendoor.zip`
 
-Deploy serveur:
-1. Ouvrir `artifacts/release/breakerandopendoor`.
-2. Copier le contenu du dossier dans `game/csgo/` du serveur.
-3. Redemarrer la map (ou hot reload si serveur deja en route).
+Server deployment:
+1. Open `artifacts/release/breakerandopendoor`.
+2. Copy folder contents into server `game/csgo/`.
+3. Restart the map (or hot reload if supported).
 
-Notes de compatibilite (veille docs/plugins):
-- Les docs officielles CounterStrikeSharp indiquent que le plugin doit etre dans `addons/counterstrikesharp/plugins/<NomDll>/` avec au minimum `.dll` + `.deps.json` (et generalement `.pdb`).
-- Le template communautaire `create-cssharp-plugin` suit la meme logique de build/publish et de dossier plugin dedie.
+Compatibility notes:
+- CounterStrikeSharp docs indicate plugins should be in `addons/counterstrikesharp/plugins/<DllName>/` with at least `.dll` + `.deps.json` (and usually `.pdb`).
+- The community `create-cssharp-plugin` template follows the same publish layout.
 
-## Diagnostic "ca ne fait rien"
-Si le plugin charge mais aucune action n'est visible:
-1. Mettre `VerboseLogging` a `true` dans la config.
-2. Verifier les logs `round_start(immediate)` puis `round_start(delayed)`.
-3. Lire les compteurs: `scanned`, `doors_detected`, `breakables_detected`, `unknown`.
-4. Si `doors_opened=0` et `breakables_broken=0`, ajuster `DoorClassNames` / `BreakableClassNames` pour la map.
+## Troubleshooting "No visible effect"
+If the plugin loads but no action is visible:
+1. Set `VerboseLogging` to `true` in config.
+2. Check `round_start(immediate)` then `round_start(delayed)` logs.
+3. Inspect counters: `scanned`, `doors_detected`, `breakables_detected`, `unknown`.
+4. If `doors_opened=0` and `breakables_broken=0`, tune `DoorClassNames` / `BreakableClassNames` for the map.
 
-Le plugin execute une seconde passe apres un delai court (`EnableSecondPassAfterDelay`, `SecondPassDelaySeconds`) pour les maps ou l'etat des entites n'est pas encore stabilise sur l'event round_start immediat.
+The plugin runs an additional delayed pass (`EnableSecondPassAfterDelay`, `SecondPassDelaySeconds`) for maps where entities are not yet stable on immediate round_start.
 
-Cas Nuke/Mirage (vents/window):
-- La casse essaye maintenant plusieurs inputs: `Break`, `Shatter`, `Smash`, `Destroy`.
-- La detection breakable couvre aussi des tokens communs (`vent`, `window`, `glass`, `surf`).
-- Fallback terminal active: `Remove()` pour entites vent/window/glass resistantes.
+Nuke/Mirage vent-window notes:
+- Break now tries multiple inputs: `Break`, `Shatter`, `Smash`, `Destroy`.
+- Break detection also covers common tokens (`vent`, `window`, `glass`, `surf`).
+- Final fallback can call `Remove()` for stubborn vent/window/glass entities.

@@ -44,7 +44,7 @@ public sealed class CounterStrikeSharpEngineApi : ICounterStrikeSharpApi
 
         try
         {
-            // Sequence defensive: Unlock puis Open couvre plus de variantes de portes mapper-side.
+            // Defensive sequence: Unlock then Open covers more mapper-side door variants.
             entity.AcceptInput("Unlock");
             entity.AcceptInput("Open");
             return true;
