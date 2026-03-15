@@ -74,3 +74,14 @@ CS2 retake plugin that, at the start of each round:
   - deleted stale `artifacts/release/RetakePluginHost/` and `artifacts/release/RetakePluginHost.zip`
   - build script now always removes these legacy artifacts before generating a new release bundle
   - only `artifacts/release/breakerandopendoor/` and `artifacts/release/breakerandopendoor.zip` remain after build
+
+### 2026-03-15 22:31:54 +01:00
+- Action: applied a second reliability pass for vent/window breaking based on server logs.
+- Files changed:
+  - src/RetakePlugin/Core/RoundStartCoordinator.cs
+  - src/RetakePlugin/Adapters/CounterStrikeSharp/CounterStrikeSharpEngineApi.cs
+  - addons/counterstrikesharp/configs/plugins/breakerandopendoor/breakerandopendoor.json
+- Result:
+  - unknown probe now force-includes common dynamic props (`prop_dynamic*`, `prop_physics*`)
+  - vent/window-like detection widened (`grate`, `breakable`, `prop_dynamic`) for stronger Kill/Remove fallback
+  - default unknown probe tokens now include `prop_dynamic`

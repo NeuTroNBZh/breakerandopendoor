@@ -163,6 +163,13 @@ public sealed class RoundStartCoordinator
             return true;
         }
 
+        // Common map breakables on CS2 maps are often implemented as dynamic props.
+        if (className.StartsWith("prop_dynamic", StringComparison.OrdinalIgnoreCase)
+            || className.StartsWith("prop_physics", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
         foreach (var token in _config.UnknownProbeClassNameTokens)
         {
             if (className.Contains(token, StringComparison.OrdinalIgnoreCase))

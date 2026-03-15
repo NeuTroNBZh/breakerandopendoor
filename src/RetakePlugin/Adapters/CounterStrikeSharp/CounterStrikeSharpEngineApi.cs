@@ -165,6 +165,7 @@ public sealed class CounterStrikeSharpEngineApi : ICounterStrikeSharpApi
     {
         return className.Contains("breakable", StringComparison.OrdinalIgnoreCase)
             || className.Contains("physics", StringComparison.OrdinalIgnoreCase)
+            || className.Contains("prop_dynamic", StringComparison.OrdinalIgnoreCase)
             || className.Contains("shatter", StringComparison.OrdinalIgnoreCase)
             || className.Contains("window", StringComparison.OrdinalIgnoreCase)
             || className.Contains("vent", StringComparison.OrdinalIgnoreCase)
@@ -214,6 +215,9 @@ public sealed class CounterStrikeSharpEngineApi : ICounterStrikeSharpApi
             || className.Contains("window", StringComparison.OrdinalIgnoreCase)
             || className.Contains("glass", StringComparison.OrdinalIgnoreCase)
             || className.Contains("shatter", StringComparison.OrdinalIgnoreCase)
-            || className.Contains("surf", StringComparison.OrdinalIgnoreCase);
+            || className.Contains("surf", StringComparison.OrdinalIgnoreCase)
+            || className.Contains("grate", StringComparison.OrdinalIgnoreCase)
+            || className.Contains("breakable", StringComparison.OrdinalIgnoreCase)
+            || className.Contains("prop_dynamic", StringComparison.OrdinalIgnoreCase);
     }
 }

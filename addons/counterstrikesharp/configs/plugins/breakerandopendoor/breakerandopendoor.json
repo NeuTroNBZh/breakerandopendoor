@@ -28,7 +28,8 @@
     "surf",
     "grate",
     "break",
-    "brush"
+    "brush",
+    "prop_dynamic"
   ],
   "DoorClassNames": [
     "func_door",
