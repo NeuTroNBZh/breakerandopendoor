@@ -1,7 +1,7 @@
-using RetakePlugin.Config;
-using RetakePlugin.Contracts;
+using BreakerAndOpenDoor.Config;
+using BreakerAndOpenDoor.Contracts;
 
-namespace RetakePlugin.Core;
+namespace BreakerAndOpenDoor.Core;
 
 public enum EntityKind
 {

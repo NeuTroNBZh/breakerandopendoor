@@ -1,17 +1,17 @@
-using RetakePlugin.Config;
-using RetakePlugin.Core;
+using BreakerAndOpenDoor.Config;
+using BreakerAndOpenDoor.Core;
 
-namespace RetakePlugin.Adapters.CounterStrikeSharp;
+namespace BreakerAndOpenDoor.Adapters.CounterStrikeSharp;
 
 public static class CounterStrikeSharpRuntimeFactory
 {
-    public static RetakePlugin CreatePlugin(PluginConfig? config = null)
+    public static BreakerAndOpenDoorPlugin CreatePlugin(PluginConfig? config = null)
     {
         var effectiveConfig = config ?? new PluginConfig();
         return CreatePlugin(new CounterStrikeSharpEngineApi(effectiveConfig), effectiveConfig);
     }
 
-    public static RetakePlugin CreatePlugin(ICounterStrikeSharpApi api, PluginConfig? config = null)
+    public static BreakerAndOpenDoorPlugin CreatePlugin(ICounterStrikeSharpApi api, PluginConfig? config = null)
     {
         var effectiveConfig = config ?? new PluginConfig();
 
@@ -24,6 +24,6 @@ public static class CounterStrikeSharpRuntimeFactory
         var executor = new ActionExecutor(actionApi);
 
         var coordinator = new RoundStartCoordinator(scanner, classifier, executor, effectiveConfig);
-        return new RetakePlugin(coordinator, effectiveConfig);
+        return new BreakerAndOpenDoorPlugin(coordinator, effectiveConfig);
     }
 }

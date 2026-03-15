@@ -16,7 +16,7 @@ This document is for maintainers who need to continue development and release ma
 Door entities must always be treated as open-only targets. Any behavior that can break doors is a regression.
 
 ## Repository Map
-- src/RetakePlugin: plugin source
+- src/BreakerAndOpenDoor: plugin source
 - addons/counterstrikesharp/configs/plugins/breakerandopendoor: default server config
 - scripts/build-release.ps1: local release bundle script
 - .github/workflows/ci.yml: CI build validation

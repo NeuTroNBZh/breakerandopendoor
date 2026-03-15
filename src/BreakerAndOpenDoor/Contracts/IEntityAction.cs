@@ -1,4 +1,4 @@
-namespace RetakePlugin.Contracts;
+namespace BreakerAndOpenDoor.Contracts;
 
 public interface IEntityAction
 {

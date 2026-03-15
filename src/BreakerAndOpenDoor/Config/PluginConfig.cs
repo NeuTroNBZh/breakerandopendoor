@@ -1,6 +1,6 @@
 using CounterStrikeSharp.API.Core;
 
-namespace RetakePlugin.Config;
+namespace BreakerAndOpenDoor.Config;
 
 public sealed class PluginConfig : BasePluginConfig
 {

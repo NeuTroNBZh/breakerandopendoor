@@ -1,6 +1,6 @@
-using RetakePlugin.Contracts;
+using BreakerAndOpenDoor.Contracts;
 
-namespace RetakePlugin.Core;
+namespace BreakerAndOpenDoor.Core;
 
 public interface IGameActionApi
 {

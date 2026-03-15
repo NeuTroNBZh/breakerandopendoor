@@ -3,15 +3,15 @@ using CounterStrikeSharp.API.Core.Attributes;
 using CounterStrikeSharp.API.Core.Attributes.Registration;
 using CounterStrikeSharp.API.Modules.Commands;
 using Microsoft.Extensions.Logging;
-using RetakePlugin.Adapters.CounterStrikeSharp;
-using RetakePlugin.Config;
+using BreakerAndOpenDoor.Adapters.CounterStrikeSharp;
+using BreakerAndOpenDoor.Config;
 
-namespace RetakePlugin.Host;
+namespace BreakerAndOpenDoor.Host;
 
 [MinimumApiVersion(80)]
-public sealed class RetakePluginHost : BasePlugin, IPluginConfig<PluginConfig>
+public sealed class BreakerAndOpenDoorHost : BasePlugin, IPluginConfig<PluginConfig>
 {
-    private global::RetakePlugin.RetakePlugin? _runtime;
+    private global::BreakerAndOpenDoor.BreakerAndOpenDoorPlugin? _runtime;
 
     public PluginConfig Config { get; set; } = new();
 
@@ -189,7 +189,7 @@ public sealed class RetakePluginHost : BasePlugin, IPluginConfig<PluginConfig>
         _runtime.Initialize();
     }
 
-    private void ProcessRoundStartPass(global::RetakePlugin.RetakePlugin runtime, string passName)
+    private void ProcessRoundStartPass(global::BreakerAndOpenDoor.BreakerAndOpenDoorPlugin runtime, string passName)
     {
         var report = runtime.OnRoundStart();
 

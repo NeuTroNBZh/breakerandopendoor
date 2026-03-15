@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <AssemblyName>breakerandopendoor</AssemblyName>
-    <RootNamespace>RetakePlugin</RootNamespace>
+    <RootNamespace>BreakerAndOpenDoor</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

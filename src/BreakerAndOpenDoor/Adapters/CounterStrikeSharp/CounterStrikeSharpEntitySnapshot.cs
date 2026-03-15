@@ -1,4 +1,4 @@
-namespace RetakePlugin.Adapters.CounterStrikeSharp;
+namespace BreakerAndOpenDoor.Adapters.CounterStrikeSharp;
 
 public sealed record CounterStrikeSharpEntitySnapshot(
     string EntityId,

@@ -1,8 +1,8 @@
 using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
-using RetakePlugin.Config;
+using BreakerAndOpenDoor.Config;
 
-namespace RetakePlugin.Adapters.CounterStrikeSharp;
+namespace BreakerAndOpenDoor.Adapters.CounterStrikeSharp;
 
 public sealed class CounterStrikeSharpEngineApi : ICounterStrikeSharpApi
 {

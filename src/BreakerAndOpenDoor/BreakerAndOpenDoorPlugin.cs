@@ -1,15 +1,15 @@
-using RetakePlugin.Config;
-using RetakePlugin.Core;
-using RetakePlugin.Adapters.CounterStrikeSharp;
+using BreakerAndOpenDoor.Config;
+using BreakerAndOpenDoor.Core;
+using BreakerAndOpenDoor.Adapters.CounterStrikeSharp;
 
-namespace RetakePlugin;
+namespace BreakerAndOpenDoor;
 
-public sealed class RetakePlugin
+public sealed class BreakerAndOpenDoorPlugin
 {
     private readonly RoundStartCoordinator _coordinator;
     private readonly PluginConfig _config;
 
-    public RetakePlugin(
+    public BreakerAndOpenDoorPlugin(
         RoundStartCoordinator coordinator,
         PluginConfig config)
     {
@@ -17,10 +17,10 @@ public sealed class RetakePlugin
         _config = config;
     }
 
-    public string ModuleName => "RetakePlugin";
+    public string ModuleName => "breakerandopendoor";
     public string ModuleVersion => "0.1.0";
 
-    public static RetakePlugin CreateWithCounterStrikeSharp(
+    public static BreakerAndOpenDoorPlugin CreateWithCounterStrikeSharp(
         ICounterStrikeSharpApi api,
         PluginConfig? config = null)
     {

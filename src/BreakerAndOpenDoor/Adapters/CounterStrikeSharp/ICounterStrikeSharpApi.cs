@@ -1,4 +1,4 @@
-namespace RetakePlugin.Adapters.CounterStrikeSharp;
+namespace BreakerAndOpenDoor.Adapters.CounterStrikeSharp;
 
 public interface ICounterStrikeSharpApi
 {

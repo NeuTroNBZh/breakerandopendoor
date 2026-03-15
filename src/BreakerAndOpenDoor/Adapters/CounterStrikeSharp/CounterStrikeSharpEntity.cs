@@ -1,6 +1,6 @@
-using RetakePlugin.Contracts;
+using BreakerAndOpenDoor.Contracts;
 
-namespace RetakePlugin.Adapters.CounterStrikeSharp;
+namespace BreakerAndOpenDoor.Adapters.CounterStrikeSharp;
 
 public sealed class CounterStrikeSharpEntity : IGameEntity
 {

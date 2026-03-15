@@ -1,7 +1,7 @@
-using RetakePlugin.Contracts;
-using RetakePlugin.Core;
+using BreakerAndOpenDoor.Contracts;
+using BreakerAndOpenDoor.Core;
 
-namespace RetakePlugin.Adapters.CounterStrikeSharp;
+namespace BreakerAndOpenDoor.Adapters.CounterStrikeSharp;
 
 public sealed class CounterStrikeSharpGameActionApi : IGameActionApi
 {

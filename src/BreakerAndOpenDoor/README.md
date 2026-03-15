@@ -1,6 +1,6 @@
-# RetakePlugin
+# Plugin Runtime (legacy folder name: RetakePlugin)
 
-Core CS2 retake plugin implementation focused on round_start orchestration.
+Core CS2 plugin runtime focused on round_start orchestration (not restricted to retake-only usage).
 
 ## Gameplay Rules
 - Every door must be opened.
@@ -8,8 +8,8 @@ Core CS2 retake plugin implementation focused on round_start orchestration.
 - Every non-door breakable should be broken at round start.
 
 ## Architecture
-- RetakePlugin.cs: plugin entry point and round lifecycle integration.
-- Host/RetakePluginHost.cs: concrete CounterStrikeSharp plugin (BasePlugin) wired to events.
+- BreakerAndOpenDoorPlugin.cs: plugin entry point and round lifecycle integration.
+- Host/BreakerAndOpenDoorHost.cs: concrete CounterStrikeSharp plugin (BasePlugin) wired to events.
 - Core/RoundStartCoordinator.cs: scan -> classification -> action orchestration.
 - Core/EntityScanner.cs: entity collection through a testable abstraction.
 - Core/EntityClassifier.cs: entity classification with door-first priority.
@@ -23,7 +23,7 @@ Core CS2 retake plugin implementation focused on round_start orchestration.
   - exposes EnumerateEntities()
   - executes TryOpenDoor(entityId)
   - executes TryBreakEntity(entityId)
-- Create plugin runtime via RetakePlugin.CreateWithCounterStrikeSharp(api, config).
+- Create plugin runtime via BreakerAndOpenDoorPlugin.CreateWithCounterStrikeSharp(api, config).
 
 Included engine implementation:
 - CounterStrikeSharpEngineApi uses Utilities.GetAllEntities() for enumeration.
@@ -37,7 +37,7 @@ Business-priority pipeline:
 4. Ignore
 
 ## CounterStrikeSharp Host Plugin
-- Concrete class: Host/RetakePluginHost.cs
+- Concrete class: Host/BreakerAndOpenDoorHost.cs
 - Event hook: [GameEventHandler] OnRoundStart(EventRoundStart, GameEventInfo)
 - Behavior: calls _runtime.OnRoundStart() then logs the execution report.
 - Config loading: IPluginConfig<PluginConfig> via OnConfigParsed(PluginConfig).

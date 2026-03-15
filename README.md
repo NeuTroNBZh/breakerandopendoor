@@ -149,7 +149,7 @@ powershell -ExecutionPolicy Bypass -File scripts/build-release.ps1
 
 ### Linux
 ```bash
-dotnet build src/RetakePlugin/RetakePluginHost.csproj -c Release
+dotnet build src/BreakerAndOpenDoor/BreakerAndOpenDoor.csproj -c Release
 ```
 
 Output:
@@ -161,7 +161,7 @@ Output:
 ```
 breakerandopendoor/
 ├── src/
-│   └── RetakePlugin/           # Plugin source code
+│   └── BreakerAndOpenDoor/      # Plugin source code
 │       ├── Core/               # Business logic
 │       ├── Config/             # Configuration
 │       ├── Adapters/           # Adapters

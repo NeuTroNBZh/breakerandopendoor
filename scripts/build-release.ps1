@@ -7,7 +7,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
-$projectPath = Join-Path $repoRoot "src\RetakePlugin\RetakePluginHost.csproj"
+$projectPath = Join-Path $repoRoot "src\BreakerAndOpenDoor\BreakerAndOpenDoor.csproj"
 
 $publishDir = Join-Path $repoRoot "artifacts\publish\breakerandopendoor"
 $bundleRoot = Join-Path $repoRoot "artifacts\release\breakerandopendoor"

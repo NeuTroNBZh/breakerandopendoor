@@ -1,6 +1,6 @@
-using RetakePlugin.Config;
+using BreakerAndOpenDoor.Config;
 
-namespace RetakePlugin.Core;
+namespace BreakerAndOpenDoor.Core;
 
 public sealed class RoundStartCoordinator
 {
