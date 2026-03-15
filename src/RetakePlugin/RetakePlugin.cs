@@ -34,6 +34,11 @@ public sealed class RetakePlugin
         // - Charger/valider la configuration
     }
 
+    public void BeginRound()
+    {
+        _coordinator.BeginNewRound();
+    }
+
     public RoundStartReport OnRoundStart()
     {
         var report = _coordinator.HandleRoundStart();

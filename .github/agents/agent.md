@@ -30,3 +30,15 @@ Plugin CS2 retake qui, au debut de chaque round:
   - branche `main` poussee et synchronisee apres fusion propre de l'initial commit distant
 - Note:
   - workflow release GitHub Actions declenche par le tag `v0.1.0`.
+
+### 2026-03-15 21:34:14 +01:00
+- Action: ajout d'une randomisation de l'ouverture des portes pour eviter que toutes les portes soient ouvertes a chaque round.
+- Fichiers modifies:
+  - src/RetakePlugin/Config/PluginConfig.cs
+  - src/RetakePlugin/Core/RoundStartCoordinator.cs
+  - src/RetakePlugin/RetakePlugin.cs
+  - src/RetakePlugin/Host/RetakePluginHost.cs
+  - addons/counterstrikesharp/configs/plugins/breakerandopendoor/breakerandopendoor.json
+  - README.md
+- Decision:
+  - nouvelle option `DoorOpenChancePercent` (0-100), avec decision stable par porte sur un round complet (multi-pass inclus).

@@ -5,6 +5,7 @@ namespace RetakePlugin.Config;
 public sealed class PluginConfig : BasePluginConfig
 {
     public bool EnableOpenDoors { get; set; } = true;
+    public int DoorOpenChancePercent { get; set; } = 100;
     public bool EnableBreakWindows { get; set; } = true;
     public bool EnableBreakVents { get; set; } = true;
     public bool EnableBreakOtherBreakables { get; set; } = true;

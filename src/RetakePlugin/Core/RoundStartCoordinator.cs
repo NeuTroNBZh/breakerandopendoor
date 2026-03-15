@@ -8,6 +8,7 @@ public sealed class RoundStartCoordinator
     private readonly EntityClassifier _classifier;
     private readonly ActionExecutor _executor;
     private readonly PluginConfig _config;
+    private readonly Dictionary<string, bool> _doorOpenDecisions = new(StringComparer.Ordinal);
 
     public RoundStartCoordinator(
         EntityScanner scanner,
@@ -19,6 +20,11 @@ public sealed class RoundStartCoordinator
         _classifier = classifier;
         _executor = executor;
         _config = config;
+    }
+
+    public void BeginNewRound()
+    {
+        _doorOpenDecisions.Clear();
     }
 
     public RoundStartReport HandleRoundStart()
@@ -39,6 +45,13 @@ public sealed class RoundStartCoordinator
                         report.DoorsDetected++;
                         if (!_config.EnableOpenDoors)
                         {
+                            report.Ignored++;
+                            break;
+                        }
+
+                        if (!ShouldOpenDoorThisRound(entity.EntityId))
+                        {
+                            report.DoorsSkippedByRandom++;
                             report.Ignored++;
                             break;
                         }
@@ -160,6 +173,30 @@ public sealed class RoundStartCoordinator
 
         return false;
     }
+
+    private bool ShouldOpenDoorThisRound(string entityId)
+    {
+        var chance = Math.Clamp(_config.DoorOpenChancePercent, 0, 100);
+
+        if (chance >= 100)
+        {
+            return true;
+        }
+
+        if (chance <= 0)
+        {
+            return false;
+        }
+
+        if (_doorOpenDecisions.TryGetValue(entityId, out var shouldOpen))
+        {
+            return shouldOpen;
+        }
+
+        shouldOpen = Random.Shared.Next(0, 100) < chance;
+        _doorOpenDecisions[entityId] = shouldOpen;
+        return shouldOpen;
+    }
 }
 
 public sealed class RoundStartReport
@@ -172,6 +209,7 @@ public sealed class RoundStartReport
     public int UnknownProbeAttempts { get; set; }
     public int UnknownProbeBroken { get; set; }
     public int DoorsOpened { get; set; }
+    public int DoorsSkippedByRandom { get; set; }
     public int BreakablesBroken { get; set; }
     public int Ignored { get; set; }
     public int Errors { get; set; }

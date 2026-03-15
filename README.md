@@ -63,6 +63,7 @@ addons/counterstrikesharp/configs/plugins/breakerandopendoor/breakerandopendoor.
 {
   "ConfigVersion": 1,
   "EnableOpenDoors": true,
+  "DoorOpenChancePercent": 70,
   "EnableBreakWindows": true,
   "EnableBreakVents": true,
   "EnableBreakOtherBreakables": true
@@ -72,6 +73,7 @@ addons/counterstrikesharp/configs/plugins/breakerandopendoor/breakerandopendoor.
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
 | `EnableOpenDoors` | bool | `true` | Enable automatic door opening |
+| `DoorOpenChancePercent` | int | `100` | Percentage chance to open each door per round (0-100) |
 | `EnableBreakWindows` | bool | `true` | Enable window/glass destruction |
 | `EnableBreakVents` | bool | `true` | Enable vent/duct destruction |
 | `EnableBreakOtherBreakables` | bool | `true` | Enable other breakable objects destruction |

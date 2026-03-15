@@ -36,6 +36,7 @@ public sealed class RetakePluginHost : BasePlugin, IPluginConfig<PluginConfig>
     public HookResult OnRoundStart(EventRoundStart @event, GameEventInfo info)
     {
         EnsureRuntime();
+        _runtime?.BeginRound();
         RunRoundStartSequence();
 
         if (Config.EnableLateRoundStartPass && Config.LateRoundStartDelaySeconds > 0)
@@ -193,7 +194,7 @@ public sealed class RetakePluginHost : BasePlugin, IPluginConfig<PluginConfig>
         var report = runtime.OnRoundStart();
 
         Logger.LogInformation(
-            "round_start({Pass}) scanned={Scanned}, doors_detected={DoorsDetected}, breakables_detected={BreakablesDetected}, excluded={Excluded}, unknown={Unknown}, unknown_probe_attempts={UnknownProbeAttempts}, unknown_probe_broken={UnknownProbeBroken}, doors_opened={DoorsOpened}, breakables_broken={BreakablesBroken}, errors={Errors}",
+            "round_start({Pass}) scanned={Scanned}, doors_detected={DoorsDetected}, breakables_detected={BreakablesDetected}, excluded={Excluded}, unknown={Unknown}, unknown_probe_attempts={UnknownProbeAttempts}, unknown_probe_broken={UnknownProbeBroken}, doors_opened={DoorsOpened}, doors_skipped_random={DoorsSkippedRandom}, breakables_broken={BreakablesBroken}, errors={Errors}",
             passName,
             report.Scanned,
             report.DoorsDetected,
@@ -203,6 +204,7 @@ public sealed class RetakePluginHost : BasePlugin, IPluginConfig<PluginConfig>
             report.UnknownProbeAttempts,
             report.UnknownProbeBroken,
             report.DoorsOpened,
+            report.DoorsSkippedByRandom,
             report.BreakablesBroken,
             report.Errors);
 
@@ -223,10 +225,31 @@ public sealed class RetakePluginHost : BasePlugin, IPluginConfig<PluginConfig>
 
     private static PluginConfig Normalize(PluginConfig config)
     {
+        var doorOpenChancePercent = Math.Clamp(config.DoorOpenChancePercent, 0, 100);
+
         return new PluginConfig
         {
+            EnableOpenDoors = config.EnableOpenDoors,
+            DoorOpenChancePercent = doorOpenChancePercent,
+            EnableBreakWindows = config.EnableBreakWindows,
+            EnableBreakVents = config.EnableBreakVents,
+            EnableBreakOtherBreakables = config.EnableBreakOtherBreakables,
             MaxEntitiesPerRoundStart = config.MaxEntitiesPerRoundStart,
             VerboseLogging = config.VerboseLogging,
+            EnableSecondPassAfterDelay = config.EnableSecondPassAfterDelay,
+            SecondPassDelaySeconds = config.SecondPassDelaySeconds,
+            AdditionalPassCount = config.AdditionalPassCount,
+            AdditionalPassIntervalSeconds = config.AdditionalPassIntervalSeconds,
+            EnableLateRoundStartPass = config.EnableLateRoundStartPass,
+            LateRoundStartDelaySeconds = config.LateRoundStartDelaySeconds,
+            EnableFreezeEndPass = config.EnableFreezeEndPass,
+            FreezeEndPassDelaySeconds = config.FreezeEndPassDelaySeconds,
+            EnableKillFallbackForVentWindow = config.EnableKillFallbackForVentWindow,
+            EnableRemoveFallbackForVentWindow = config.EnableRemoveFallbackForVentWindow,
+            ProbeUnknownEntitiesForBreakInput = config.ProbeUnknownEntitiesForBreakInput,
+            UnknownProbeMaxPerPass = config.UnknownProbeMaxPerPass,
+            DebugDumpMaxLines = config.DebugDumpMaxLines,
+            UnknownProbeClassNameTokens = ToOrdinalIgnoreCaseSet(config.UnknownProbeClassNameTokens),
             DoorClassNames = ToOrdinalIgnoreCaseSet(config.DoorClassNames),
             BreakableClassNames = ToOrdinalIgnoreCaseSet(config.BreakableClassNames),
             ExcludedClassNames = ToOrdinalIgnoreCaseSet(config.ExcludedClassNames)

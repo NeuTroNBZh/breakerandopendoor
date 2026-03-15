@@ -1,6 +1,7 @@
 {
   "ConfigVersion": 1,
   "EnableOpenDoors": true,
+  "DoorOpenChancePercent": 70,
   "EnableBreakWindows": true,
   "EnableBreakVents": true,
   "EnableBreakOtherBreakables": true,
