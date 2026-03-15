@@ -7,7 +7,7 @@ namespace RetakePlugin.Adapters.CounterStrikeSharp;
 public sealed class CounterStrikeSharpEngineApi : ICounterStrikeSharpApi
 {
     private static readonly string[] BreakInputs = { "Break", "Shatter", "Smash", "Destroy" };
-    private static readonly string[] RemoveInputs = { "Kill" };
+    private static readonly string[] RemoveInputs = { "Kill", "KillHierarchy" };
     private readonly PluginConfig _config;
 
     public CounterStrikeSharpEngineApi(PluginConfig? config = null)
@@ -72,19 +72,38 @@ public sealed class CounterStrikeSharpEngineApi : ICounterStrikeSharpApi
 
         var className = entity.DesignerName ?? string.Empty;
         var ventWindowLike = IsVentWindowLike(className);
+        var acceptedDestructiveInput = false;
 
         if (TryAcceptInputs(entity, BreakInputs))
         {
+            acceptedDestructiveInput = true;
+        }
+
+        if (!entity.IsValid)
+        {
+            return true;
         }
 
         if (TryQueuedInputs(entity, BreakInputs))
         {
+            acceptedDestructiveInput = true;
+        }
+
+        if (!entity.IsValid)
+        {
+            return true;
         }
 
         if (_config.EnableKillFallbackForVentWindow && ventWindowLike)
         {
             if (TryAcceptInputs(entity, RemoveInputs) || TryQueuedInputs(entity, RemoveInputs))
             {
+                acceptedDestructiveInput = true;
+            }
+
+            if (!entity.IsValid)
+            {
+                return true;
             }
         }
 
@@ -102,6 +121,13 @@ public sealed class CounterStrikeSharpEngineApi : ICounterStrikeSharpApi
         }
 
         if (!entity.IsValid)
+        {
+            return true;
+        }
+
+        // Some map vents break asynchronously after input dispatch and may still be
+        // valid in the same server tick; treat accepted destructive input as success.
+        if (ventWindowLike && acceptedDestructiveInput)
         {
             return true;
         }
@@ -132,8 +158,7 @@ public sealed class CounterStrikeSharpEngineApi : ICounterStrikeSharpApi
 
     private static bool IsDoorHint(string className)
     {
-        return className.Contains("door", StringComparison.OrdinalIgnoreCase)
-            || className.Contains("gate", StringComparison.OrdinalIgnoreCase);
+        return className.Contains("door", StringComparison.OrdinalIgnoreCase);
     }
 
     private static bool IsBreakableHint(string className)

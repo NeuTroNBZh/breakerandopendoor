@@ -38,8 +38,12 @@
   "BreakableClassNames": [
     "func_breakable",
     "func_breakable_surf",
+    "func_window",
+    "func_glass",
     "prop_physics",
     "prop_physics_multiplayer",
+    "prop_glass",
+    "prop_vent",
     "func_shatterglass"
   ],
   "ExcludedClassNames": [

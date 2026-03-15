@@ -55,3 +55,13 @@ CS2 retake plugin that, at the start of each round:
   - new stable release `v1.0.2` published successfully with release asset
 - Decision:
   - keep a professional release policy: failed release tags are superseded by the next patch release.
+
+### 2026-03-15 22:16:49 +01:00
+- Action: fixed vent-breaking reliability regression while preserving door safety rules.
+- Files changed:
+  - src/RetakePlugin/Adapters/CounterStrikeSharp/CounterStrikeSharpEngineApi.cs
+  - addons/counterstrikesharp/configs/plugins/breakerandopendoor/breakerandopendoor.json
+- Result:
+  - tightened door hint detection to avoid accidental non-door classification
+  - reinforced vent/window break fallback sequence (Break/Shatter + Kill/KillHierarchy + Remove)
+  - expanded default breakable classnames with common window/vent/glass entities
