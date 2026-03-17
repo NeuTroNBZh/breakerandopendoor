@@ -253,3 +253,8 @@ Enable probe mode for unsupported maps.
 - [ ] Support for more maps
 - [ ] Config GUI
 - [ ] Auto-update feature
+
+## Security Best Practices
+- Keep your server updated
+- Use strong RCON passwords
+- Monitor server logs
