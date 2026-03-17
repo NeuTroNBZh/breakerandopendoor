@@ -267,3 +267,7 @@ Before deploying to production:
 
 ## Community
 Join our Discord for support and feature requests!
+
+## Related Projects
+- [CS2Retake](https://github.com/NeuTroNBZh/CS2Retake-main) - Full retake plugin
+- [CounterStrikeSharp](https://github.com/roflmuffin/CounterStrikeSharp) - The framework
