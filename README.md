@@ -228,3 +228,10 @@ Thanks to all contributors!
 ### Installation Tips
 - Always backup your config before updating
 - Test on a local server first
+
+## Troubleshooting
+### Plugin not loading
+Check that CounterStrikeSharp is properly installed.
+
+### Doors not opening
+Verify the map is in the supported list.
