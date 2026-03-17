@@ -258,3 +258,9 @@ Enable probe mode for unsupported maps.
 - Keep your server updated
 - Use strong RCON passwords
 - Monitor server logs
+
+## Testing
+Before deploying to production:
+1. Test on a local server
+2. Verify all doors open correctly
+3. Check for console errors
