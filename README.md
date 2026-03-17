@@ -218,3 +218,6 @@ Distributed under MIT License. See [LICENSE](LICENSE) for more information.
 ---
 
 **⭐ Star this repo if you use it on your server!**
+
+## Changelog
+- v1.0.0: Initial release
