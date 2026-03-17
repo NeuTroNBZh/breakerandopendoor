@@ -279,3 +279,6 @@ Join our Discord for support and feature requests!
 ## Version History
 - v1.0.0 - Initial release
 - v1.0.1 - Bug fixes and improvements
+
+## Architecture
+The plugin uses a modular architecture with separate handlers for doors, windows, vents, and other breakables.
