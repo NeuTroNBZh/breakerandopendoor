@@ -271,3 +271,7 @@ Join our Discord for support and feature requests!
 ## Related Projects
 - [CS2Retake](https://github.com/NeuTroNBZh/CS2Retake-main) - Full retake plugin
 - [CounterStrikeSharp](https://github.com/roflmuffin/CounterStrikeSharp) - The framework
+
+## Stats
+![GitHub stars](https://img.shields.io/github/stars/NeuTroNBZh/breakerandopendoor)
+![GitHub forks](https://img.shields.io/github/forks/NeuTroNBZh/breakerandopendoor)
