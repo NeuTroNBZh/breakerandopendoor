@@ -264,3 +264,6 @@ Before deploying to production:
 1. Test on a local server
 2. Verify all doors open correctly
 3. Check for console errors
+
+## Community
+Join our Discord for support and feature requests!
