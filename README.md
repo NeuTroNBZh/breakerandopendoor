@@ -248,3 +248,8 @@ Use the default config for most servers.
 
 ### Example 2: Custom Map
 Enable probe mode for unsupported maps.
+
+## Roadmap
+- [ ] Support for more maps
+- [ ] Config GUI
+- [ ] Auto-update feature
