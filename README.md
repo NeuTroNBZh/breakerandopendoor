@@ -221,3 +221,6 @@ Distributed under MIT License. See [LICENSE](LICENSE) for more information.
 
 ## Changelog
 - v1.0.0: Initial release
+
+## Acknowledgments
+Thanks to all contributors!
