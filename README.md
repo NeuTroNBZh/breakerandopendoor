@@ -285,3 +285,6 @@ The plugin uses a modular architecture with separate handlers for doors, windows
 
 ## Configuration Guide
 See our wiki for detailed configuration options.
+
+## API Documentation
+The plugin exposes console commands for server administrators.
