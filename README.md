@@ -275,3 +275,7 @@ Join our Discord for support and feature requests!
 ## Stats
 ![GitHub stars](https://img.shields.io/github/stars/NeuTroNBZh/breakerandopendoor)
 ![GitHub forks](https://img.shields.io/github/forks/NeuTroNBZh/breakerandopendoor)
+
+## Version History
+- v1.0.0 - Initial release
+- v1.0.1 - Bug fixes and improvements
