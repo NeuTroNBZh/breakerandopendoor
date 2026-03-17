@@ -289,3 +289,4 @@ See our wiki for detailed configuration options.
 ## API Documentation
 The plugin exposes console commands for server administrators.
 \n## Update 11\nDocumentation update 11
+\n### Section 6\nContent for section 6
