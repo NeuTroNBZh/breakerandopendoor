@@ -241,3 +241,10 @@ This plugin has minimal performance impact on your server.
 
 ## Credits
 Made with ❤️ for the CS2 community
+
+## Examples
+### Example 1: Basic Setup
+Use the default config for most servers.
+
+### Example 2: Custom Map
+Enable probe mode for unsupported maps.
