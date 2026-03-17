@@ -282,3 +282,6 @@ Join our Discord for support and feature requests!
 
 ## Architecture
 The plugin uses a modular architecture with separate handlers for doors, windows, vents, and other breakables.
+
+## Configuration Guide
+See our wiki for detailed configuration options.
