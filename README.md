@@ -235,3 +235,6 @@ Check that CounterStrikeSharp is properly installed.
 
 ### Doors not opening
 Verify the map is in the supported list.
+
+## Performance
+This plugin has minimal performance impact on your server.
