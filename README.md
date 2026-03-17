@@ -288,3 +288,4 @@ See our wiki for detailed configuration options.
 
 ## API Documentation
 The plugin exposes console commands for server administrators.
+\n## Update 12\nDocumentation update 12
