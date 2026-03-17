@@ -224,3 +224,7 @@ Distributed under MIT License. See [LICENSE](LICENSE) for more information.
 
 ## Acknowledgments
 Thanks to all contributors!
+
+### Installation Tips
+- Always backup your config before updating
+- Test on a local server first
