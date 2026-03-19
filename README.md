@@ -239,9 +239,6 @@ Verify the map is in the supported list.
 ## Performance
 This plugin has minimal performance impact on your server.
 
-## Credits
-Made with ❤️ for the CS2 community
-
 ## Examples
 ### Example 1: Basic Setup
 Use the default config for most servers.
