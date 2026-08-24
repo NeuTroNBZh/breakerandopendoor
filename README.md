@@ -38,6 +38,24 @@ Retake servers need predictable map state every round. This plugin enforces a cl
 - **Unknown probing**: optional probe mode for map-specific dynamic entities
 - **Diagnostics**: candidate dump command for fast map tuning
 
+### 🔁 Round-Start Pass Sequence
+
+```mermaid
+flowchart LR
+    A[Round Start] --> B[Immediate Pass]
+    B --> C[Delayed Pass]
+    C --> D[Extra Pass]
+    D --> E[Late Pass]
+    E --> F[Freeze-End Pass]
+    F --> G{Entity type}
+    G -->|Door| H[Open only\nnever destroyed]
+    G -->|Window / Vent / Breakable| I[Break]
+    I --> J{Break succeeded?}
+    J -->|No| K[Fallback break/remove input]
+    J -->|Yes| L[Done]
+    K --> L
+```
+
 ## 📦 Quick Installation
 
 ## 🚀 Release Policy
