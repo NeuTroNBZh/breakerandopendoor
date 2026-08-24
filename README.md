@@ -215,75 +215,17 @@ To report a vulnerability, see [SECURITY.md](SECURITY.md).
 
 Distributed under MIT License. See [LICENSE](LICENSE) for more information.
 
+## Troubleshooting
+
+**Plugin not loading** — Check that CounterStrikeSharp is properly installed.
+
+**Doors not opening** — Verify the map is in the [supported list](#️-supported-maps).
+
+## Related Projects
+
+- [CS2-RETAKE](https://github.com/NeuTroNBZh/CS2-RETAKE) — Full retake plugin
+- [CounterStrikeSharp](https://github.com/roflmuffin/CounterStrikeSharp) — The framework
+
 ---
 
 **⭐ Star this repo if you use it on your server!**
-
-## Changelog
-- v1.0.0: Initial release
-
-## Acknowledgments
-Thanks to all contributors!
-
-### Installation Tips
-- Always backup your config before updating
-- Test on a local server first
-
-## Troubleshooting
-### Plugin not loading
-Check that CounterStrikeSharp is properly installed.
-
-### Doors not opening
-Verify the map is in the supported list.
-
-## Performance
-This plugin has minimal performance impact on your server.
-
-## Examples
-### Example 1: Basic Setup
-Use the default config for most servers.
-
-### Example 2: Custom Map
-Enable probe mode for unsupported maps.
-
-## Roadmap
-- [ ] Support for more maps
-- [ ] Config GUI
-- [ ] Auto-update feature
-
-## Security Best Practices
-- Keep your server updated
-- Use strong RCON passwords
-- Monitor server logs
-
-## Testing
-Before deploying to production:
-1. Test on a local server
-2. Verify all doors open correctly
-3. Check for console errors
-
-## Community
-Join our Discord for support and feature requests!
-
-## Related Projects
-- [CS2Retake](https://github.com/NeuTroNBZh/CS2Retake-main) - Full retake plugin
-- [CounterStrikeSharp](https://github.com/roflmuffin/CounterStrikeSharp) - The framework
-
-## Stats
-![GitHub stars](https://img.shields.io/github/stars/NeuTroNBZh/breakerandopendoor)
-![GitHub forks](https://img.shields.io/github/forks/NeuTroNBZh/breakerandopendoor)
-
-## Version History
-- v1.0.0 - Initial release
-- v1.0.1 - Bug fixes and improvements
-
-## Architecture
-The plugin uses a modular architecture with separate handlers for doors, windows, vents, and other breakables.
-
-## Configuration Guide
-See our wiki for detailed configuration options.
-
-## API Documentation
-The plugin exposes console commands for server administrators.
-\n## Update 11\nDocumentation update 11
-\n### Section 1\nContent for section 1
